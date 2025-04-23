@@ -9,11 +9,11 @@ const path = require("path");
 const fs = require("fs");
 const chat = require("./chatGPT");
 
-const pathConsultas = path.join(__dirname, "promptConsultas.txt");
+const pathConsultas = path.join(__dirname, "mensajes", "promptConsultas.txt");
 const promptConsultas = fs.readFileSync(pathConsultas, "utf8");
 
 const flowDespedida = addKeyword("salir")
-    .addAnswer("👋 Gracias por usar el chatbot de AI for Developers. ¡Hasta luego!");
+    .addAnswer("👋 Gracias por usar el chatbot de AI for Developers. ¡Hasta luego y buen código!");
 
 const flowPreguntas = addKeyword(EVENTS.ACTION)
     .addAnswer("Procesando tu consulta...", null, async (ctx, ctxFn) => {
