@@ -9,11 +9,9 @@ const path = require("path");
 const fs = require("fs");
 const chat = require("./chatGPT");
 
-// Cargar el prompt
 const pathConsultas = path.join(__dirname, "mensajes", "promptConsultas.txt");
 const promptConsultas = fs.readFileSync(pathConsultas, "utf8");
 
-// Validar si una consulta del usuario es relevante antes de mandarla a GPT
 const validarConsultaRelevante = (texto) => {
     const palabrasClave = [
         "normativas", "prácticas", "principios", "desarrollo", "software",
