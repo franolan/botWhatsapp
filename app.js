@@ -12,30 +12,16 @@ const chat = require("./chatGPT");
 const pathConsultas = path.join(__dirname, "mensajes", "promptConsultas.txt");
 const promptConsultas = fs.readFileSync(pathConsultas, "utf8");
 
-const palabrasClave = [
-    "normativas", "prácticas", "principios", "desarrollo", "software",
-    "programación", "arquitectura", "sistemas", "documentación",
-    "ingeniería", "ágil", "scrum", "metodología", "devops", "patrones", "código"
-];
+const esConsultaRelevante = async (texto) => {
+    const promptValidacion = `
+Eres un asistente experto en desarrollo de software. Tu tarea es responder únicamente si la siguiente consulta está relacionada con normativas, buenas prácticas o principios del desarrollo de software.
 
-const validarConsultaRelevante = (texto) => 
-    palabrasClave.some(palabra => texto.toLowerCase().includes(palabra));
+Consulta: "${texto}"
 
-const procesarConsulta = async (ctx, ctxFn) => {
-    const consulta = ctx.body;
-
-    if (!validarConsultaRelevante(consulta)) {
-        return await ctxFn.flowDynamic("🚫 Lo siento, tu pregunta no parece estar relacionada con el desarrollo de software. Solo puedo ayudarte con normativas, buenas prácticas y principios del desarrollo.");
-    }
-
-    const respuesta = await chat(promptConsultas, consulta);
-
-    if (!respuesta || !respuesta.content) {
-        return await ctxFn.flowDynamic("😕 No pude encontrar una respuesta adecuada. Intenta reformular tu pregunta.");
-    }
-
-    await ctxFn.flowDynamic(respuesta.content);
-    await ctxFn.flowDynamic("¿Tienes alguna otra pregunta sobre normativas, buenas prácticas o principios del desarrollo de software?\nEscribe *salir* si ya no tienes más preguntas.");
+Responde únicamente con "sí" si es relevante, o "no" si no lo es.
+    `;
+    const respuesta = await chat(promptValidacion, texto);
+    return respuesta.content.toLowerCase().includes("sí");
 };
 
 const flowDespedida = addKeyword("salir")
@@ -43,13 +29,41 @@ const flowDespedida = addKeyword("salir")
 
 const flowPreguntas = addKeyword(EVENTS.ACTION)
     .addAnswer("Procesando tu consulta...", null, async (ctx, ctxFn) => {
-        await procesarConsulta(ctx, ctxFn);
+        const consulta = ctx.body;
+
+        const esValida = await esConsultaRelevante(consulta);
+        if (!esValida) {
+            return await ctxFn.flowDynamic("Lo siento, tu pregunta no parece estar relacionada con normativas, buenas prácticas o principios del desarrollo de software.");
+        }
+
+        const respuesta = await chat(promptConsultas, consulta);
+
+        if (!respuesta || !respuesta.content) {
+            return await ctxFn.flowDynamic("No pude encontrar una respuesta adecuada. Intenta reformular tu pregunta.");
+        }
+
+        await ctxFn.flowDynamic(respuesta.content);
+        await ctxFn.flowDynamic("¿Tienes otra pregunta sobre desarrollo de software? Escribe *salir* para terminar.");
     });
 
 const flowBienvenida = addKeyword(EVENTS.WELCOME)
-    .addAnswer("¡Buen día! 🤖 Este es un chatbot sobre *normativas, buenas prácticas y principios fundamentales del desarrollo de software.*")
+    .addAnswer("¡Buen día! 🤖 Este es un chatbot sobre *normativas, buenas prácticas y principios del desarrollo de software.*")
     .addAnswer("¿Tienes alguna pregunta al respecto?", { capture: true }, async (ctx, ctxFn) => {
-        await procesarConsulta(ctx, ctxFn);
+        const consulta = ctx.body;
+
+        const esValida = await esConsultaRelevante(consulta);
+        if (!esValida) {
+            return await ctxFn.flowDynamic("Lo siento, tu pregunta no parece estar relacionada con normativas, buenas prácticas o principios del desarrollo de software.");
+        }
+
+        const respuesta = await chat(promptConsultas, consulta);
+
+        if (!respuesta || !respuesta.content) {
+            return await ctxFn.flowDynamic("No pude encontrar una respuesta adecuada. Intenta reformular tu pregunta.");
+        }
+
+        await ctxFn.flowDynamic(respuesta.content);
+        await ctxFn.flowDynamic("¿Tienes otra pregunta sobre desarrollo de software? Escribe *salir* para terminar.");
     });
 
 const main = async () => {
