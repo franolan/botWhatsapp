@@ -18,7 +18,7 @@ const flowDespedida = addKeyword("salir")
     .addAnswer("👋 Gracias por usar el chatbot de AI for Developers. ¡Hasta luego y buen código!");
 
 // Flow para manejar preguntas después de la primera
-const flowPreguntas = addKeyword(/.*/)
+const flowPreguntas = addKeyword(EVENTS.ACTION)
     .addAnswer("Procesando tu consulta...", null, async (ctx, ctxFn) => {
         const consulta = ctx.body;
         const respuesta = await chat(promptConsultas, consulta);
@@ -35,6 +35,7 @@ const flowPreguntas = addKeyword(/.*/)
         await ctxFn.flowDynamic(respuesta.content);
         await ctxFn.flowDynamic("¿Tienes alguna otra pregunta sobre normativas, buenas prácticas o principios del desarrollo de software?\nEscribe *salir* si ya no tienes más preguntas.");
     });
+
 
 // Primer mensaje de bienvenida
 const flowBienvenida = addKeyword(EVENTS.WELCOME)
