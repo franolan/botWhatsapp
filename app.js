@@ -54,7 +54,7 @@ const menuFlow = addKeyword("Menu").addAnswer(
 
 const main = async () => {
     const adapterDB = new MockAdapter()
-    const adapterFlow = createFlow([flowWelcome, menuFlow, flowMenuRest, flowReservar, flowConsultas])
+    const adapterFlow = createFlow([flowWelcome, menuFlow,flowConsultas])
     const adapterProvider = createProvider(BaileysProvider)
 
     createBot({
