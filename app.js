@@ -40,7 +40,7 @@ const flowWelcome = addKeyword(EVENTS.WELCOME)
         if (ctx.body.includes("Casas")) {
             await ctxFn.flowDynamic("Escribiste casas")
         } else {
-            await ctxFn.flowDynamic("Escribiste otra cosa")
+            await ctxFn.flowDynamic("Escribe otra cosa")
         }
     })
 
