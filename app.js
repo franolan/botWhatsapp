@@ -9,23 +9,23 @@ const path = require("path");
 const fs = require("fs");
 const chat = require("./chatGPT");
 
-// Cargar el contenido del prompt
+// Cargar el prompt
 const pathConsultas = path.join(__dirname, "mensajes", "promptConsultas.txt");
 const promptConsultas = fs.readFileSync(pathConsultas, "utf8");
 
-// Flujo principal para responder a cualquier mensaje
-const flowConsultas = addKeyword(EVENTS.MESSAGE)
-    .addAnswer("¡Buen día! 🤖 Este es un chatbot sobre *normativas, buenas prácticas y principios fundamentales del desarrollo de software.* ¿Tienes alguna pregunta al respecto?", 
-        { capture: true }, 
+// Flujo de bienvenida y manejo de consulta
+const flowConsultas = addKeyword(EVENTS.WELCOME)
+    .addAnswer(
+        "¡Buen día! 🤖 Este es un chatbot sobre *normativas, buenas prácticas y principios fundamentales del desarrollo de software.* ¿Tienes alguna pregunta al respecto?",
+        { capture: true },
         async (ctx, ctxFn) => {
             const consulta = ctx.body;
             const respuesta = await chat(promptConsultas, consulta);
 
-            // Verificamos si la respuesta es válida
             if (
-                !respuesta || 
-                !respuesta.content || 
-                respuesta.content.toLowerCase().includes("no tengo información") || 
+                !respuesta ||
+                !respuesta.content ||
+                respuesta.content.toLowerCase().includes("no tengo información") ||
                 respuesta.content.length < 10
             ) {
                 return await ctxFn.flowDynamic("🚫 Lo siento, tu pregunta parece no estar relacionada con el tema del desarrollo de software. Intenta reformularla con foco en *normativas, buenas prácticas o principios fundamentales.*");
@@ -35,11 +35,10 @@ const flowConsultas = addKeyword(EVENTS.MESSAGE)
         }
     );
 
-// Función principal
 const main = async () => {
     const adapterFlow = createFlow([flowConsultas]);
     const adapterProvider = createProvider(BaileysProvider);
-    const adapterDB = new MockAdapter(); // Aunque no uses base de datos real, este mock es requerido por la librería
+    const adapterDB = new MockAdapter(); // Requerido aunque no uses una base de datos real
 
     createBot({
         flow: adapterFlow,
