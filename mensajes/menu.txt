@@ -1,5 +1,0 @@
-Elegi alguna de estas opciones:
-
-Opcion 1 - Hacer consultas
-
-Opcion 0 - Salir
