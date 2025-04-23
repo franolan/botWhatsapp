@@ -12,59 +12,50 @@ const chat = require("./chatGPT");
 const pathConsultas = path.join(__dirname, "mensajes", "promptConsultas.txt");
 const promptConsultas = fs.readFileSync(pathConsultas, "utf8");
 
-const validarConsultaRelevante = (texto) => {
-    const palabrasClave = [
-        "normativas", "prácticas", "principios", "desarrollo", "software",
-        "programación", "arquitectura", "sistemas", "documentación", 
-        "ingeniería", "ágil", "scrum", "metodología", "devops", "patrones", "código"
-    ];
-    return palabrasClave.some(palabra => texto.toLowerCase().includes(palabra));
+const palabrasClave = [
+    "normativas", "prácticas", "principios", "desarrollo", "software",
+    "programación", "arquitectura", "sistemas", "documentación",
+    "ingeniería", "ágil", "scrum", "metodología", "devops", "patrones", "código"
+];
+
+const validarConsultaRelevante = (texto) => 
+    palabrasClave.some(palabra => texto.toLowerCase().includes(palabra));
+
+const procesarConsulta = async (ctx, ctxFn) => {
+    const consulta = ctx.body;
+
+    if (!validarConsultaRelevante(consulta)) {
+        return await ctxFn.flowDynamic("🚫 Lo siento, tu pregunta no parece estar relacionada con el desarrollo de software. Solo puedo ayudarte con normativas, buenas prácticas y principios del desarrollo.");
+    }
+
+    const respuesta = await chat(promptConsultas, consulta);
+
+    if (!respuesta || !respuesta.content) {
+        return await ctxFn.flowDynamic("😕 No pude encontrar una respuesta adecuada. Intenta reformular tu pregunta.");
+    }
+
+    await ctxFn.flowDynamic(respuesta.content);
+    await ctxFn.flowDynamic("¿Tienes alguna otra pregunta sobre normativas, buenas prácticas o principios del desarrollo de software?\nEscribe *salir* si ya no tienes más preguntas.");
 };
 
 const flowDespedida = addKeyword("salir")
-    .addAnswer("👋 Gracias por usar el chatbot de AI for Developers. ¡Hasta luego y buen código!");
+    .addAnswer("👋 Gracias por usar el chatbot de AI for Developers. ¡Hasta luego!");
 
 const flowPreguntas = addKeyword(EVENTS.ACTION)
     .addAnswer("Procesando tu consulta...", null, async (ctx, ctxFn) => {
-        const consulta = ctx.body;
-
-        if (!validarConsultaRelevante(consulta)) {
-            return await ctxFn.flowDynamic("🚫 Lo siento, tu pregunta no parece estar relacionada con el desarrollo de software. Solo puedo ayudarte con normativas, buenas prácticas y principios del desarrollo.");
-        }
-
-        const respuesta = await chat(promptConsultas, consulta);
-
-        if (!respuesta || !respuesta.content) {
-            return await ctxFn.flowDynamic("😕 No pude encontrar una respuesta adecuada. Intenta reformular tu pregunta.");
-        }
-
-        await ctxFn.flowDynamic(respuesta.content);
-        await ctxFn.flowDynamic("¿Tienes alguna otra pregunta sobre normativas, buenas prácticas o principios del desarrollo de software?\nEscribe *salir* si ya no tienes más preguntas.");
+        await procesarConsulta(ctx, ctxFn);
     });
 
 const flowBienvenida = addKeyword(EVENTS.WELCOME)
     .addAnswer("¡Buen día! 🤖 Este es un chatbot sobre *normativas, buenas prácticas y principios fundamentales del desarrollo de software.*")
     .addAnswer("¿Tienes alguna pregunta al respecto?", { capture: true }, async (ctx, ctxFn) => {
-        const consulta = ctx.body;
-
-        if (!validarConsultaRelevante(consulta)) {
-            return await ctxFn.flowDynamic("🚫 Lo siento, tu pregunta no parece estar relacionada con el desarrollo de software. Solo puedo ayudarte con normativas, buenas prácticas y principios del desarrollo.");
-        }
-
-        const respuesta = await chat(promptConsultas, consulta);
-
-        if (!respuesta || !respuesta.content) {
-            return await ctxFn.flowDynamic("😕 No pude encontrar una respuesta adecuada. Intenta reformular tu pregunta.");
-        }
-
-        await ctxFn.flowDynamic(respuesta.content);
-        await ctxFn.flowDynamic("¿Tienes alguna otra pregunta sobre normativas, buenas prácticas o principios del desarrollo de software?\nEscribe *salir* si ya no tienes más preguntas.");
+        await procesarConsulta(ctx, ctxFn);
     });
 
 const main = async () => {
     const adapterFlow = createFlow([flowBienvenida, flowPreguntas, flowDespedida]);
     const adapterProvider = createProvider(BaileysProvider);
-    const adapterDB = new MockAdapter(); 
+    const adapterDB = new MockAdapter();
 
     createBot({
         flow: adapterFlow,
