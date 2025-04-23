@@ -9,52 +9,39 @@ const path = require("path")
 const fs = require("fs")
 const chat = require("./chatGPT")
 
-
-const menuPath = path.join(__dirname, "mensajes", "menu.txt")
-const menu = fs.readFileSync(menuPath, "utf8")
-
 const pathConsultas = path.join(__dirname, "mensajes", "promptConsultas.txt")
 const promptConsultas = fs.readFileSync(pathConsultas, "utf8")
 
-const flowConsultas = addKeyword(EVENTS.ACTION)
-    .addAnswer('Este es el flow consultas')
-    .addAnswer("Hace tu consulta", { capture: true }, async (ctx, ctxFn) => {
-        const prompt = promptConsultas
+const flowPrincipal = addKeyword(EVENTS.MESSAGE)
+    .addAnswer(
+        "👋 ¡Buen día! Este es un chatbot sobre:\n\n📘 *Normativas*, 🛠️ *mejores prácticas* y 🧠 *principios fundamentales del desarrollo de software*.\n\n¿Tienes alguna pregunta sobre estos temas?",
+        { delay: 200 }
+    )
+    .addAction(async (ctx, ctxFn) => {
         const consulta = ctx.body
-        const answer = await chat(prompt, consulta)
-        await ctxFn.flowDynamic(answer.content)
-    })
+        try {
+            const respuesta = await chat(promptConsultas, consulta)
 
-const flowWelcome = addKeyword(EVENTS.WELCOME)
-    .addAnswer("Bienvenido a AI for Developers", {
-        delay: 100,
-    }, async (ctx, ctxFn) => {
-        if (ctx.body.includes("Casas")) {
-            await ctxFn.flowDynamic("Escribiste casas")
-        } else {
-            await ctxFn.flowDynamic("Escribe otra cosa")
+            // Si la respuesta está vacía o no es relevante
+            if (
+                !respuesta?.content ||
+                respuesta.content.toLowerCase().includes("no puedo ayudarte") ||
+                respuesta.content.toLowerCase().includes("no entiendo") ||
+                respuesta.content.trim() === ""
+            ) {
+                await ctxFn.flowDynamic("⚠️ Solo puedo responder preguntas sobre *normativas, buenas prácticas* y *principios del desarrollo de software*. Intenta reformular tu consulta dentro de esos temas.")
+            } else {
+                await ctxFn.flowDynamic(respuesta.content)
+            }
+        } catch (error) {
+            console.error("Error procesando la respuesta:", error)
+            await ctxFn.flowDynamic("Ocurrió un error al procesar tu consulta. Intenta más tarde.")
         }
     })
-
-const menuFlow = addKeyword("Menu").addAnswer(
-    menu,
-    { capture: true },
-    async (ctx, { gotoFlow, fallBack, flowDynamic }) => {
-        if (!["1", "2", "3", "0"].includes(ctx.body)) {
-            return fallBack("Respuesta no válida, por favor selecciona una de las opciones.")
-        }
-        switch (ctx.body) {
-            case "1":
-                return gotoFlow(flowConsultas)
-            case "0":
-                return await flowDynamic("Saliendo... Puedes volver a acceder a este menú escribiendo '*Menu*'")
-        }
-    }
-)
 
 const main = async () => {
     const adapterDB = new MockAdapter()
-    const adapterFlow = createFlow([flowWelcome, menuFlow,flowConsultas])
+    const adapterFlow = createFlow([flowPrincipal])
     const adapterProvider = createProvider(BaileysProvider)
 
     createBot({
@@ -67,3 +54,4 @@ const main = async () => {
 }
 
 main()
+
