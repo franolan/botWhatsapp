@@ -1,57 +1,53 @@
-const { createBot, createProvider, createFlow, addKeyword, EVENTS } = require('@bot-whatsapp/bot')
-require("dotenv").config()
+const { createBot, createProvider, createFlow, addKeyword, EVENTS } = require('@bot-whatsapp/bot');
+require("dotenv").config();
 
-const QRPortalWeb = require('@bot-whatsapp/portal')
-const BaileysProvider = require('@bot-whatsapp/provider/baileys')
-const MockAdapter = require('@bot-whatsapp/database/mock')
+const QRPortalWeb = require('@bot-whatsapp/portal');
+const BaileysProvider = require('@bot-whatsapp/provider/baileys');
+const MockAdapter = require('@bot-whatsapp/database/mock');
 
-const path = require("path")
-const fs = require("fs")
-const chat = require("./chatGPT")
+const path = require("path");
+const fs = require("fs");
+const chat = require("./chatGPT");
 
-const pathConsultas = path.join(__dirname, "mensajes", "promptConsultas.txt")
-const promptConsultas = fs.readFileSync(pathConsultas, "utf8")
+// Cargar el contenido del prompt
+const pathConsultas = path.join(__dirname, "mensajes", "promptConsultas.txt");
+const promptConsultas = fs.readFileSync(pathConsultas, "utf8");
 
-const flowPrincipal = addKeyword(EVENTS.MESSAGE)
-    .addAnswer(
-        "👋 ¡Buen día! Este es un chatbot sobre:\n\n📘 *Normativas*, 🛠️ *mejores prácticas* y 🧠 *principios fundamentales del desarrollo de software*.\n\n¿Tienes alguna pregunta sobre estos temas?",
-        { delay: 200 }
-    )
-    .addAction(async (ctx, ctxFn) => {
-        const consulta = ctx.body
-        try {
-            const respuesta = await chat(promptConsultas, consulta)
+// Flujo principal para responder a cualquier mensaje
+const flowConsultas = addKeyword(EVENTS.MESSAGE)
+    .addAnswer("¡Buen día! 🤖 Este es un chatbot sobre *normativas, buenas prácticas y principios fundamentales del desarrollo de software.* ¿Tienes alguna pregunta al respecto?", 
+        { capture: true }, 
+        async (ctx, ctxFn) => {
+            const consulta = ctx.body;
+            const respuesta = await chat(promptConsultas, consulta);
 
-            // Si la respuesta está vacía o no es relevante
+            // Verificamos si la respuesta es válida
             if (
-                !respuesta?.content ||
-                respuesta.content.toLowerCase().includes("no puedo ayudarte") ||
-                respuesta.content.toLowerCase().includes("no entiendo") ||
-                respuesta.content.trim() === ""
+                !respuesta || 
+                !respuesta.content || 
+                respuesta.content.toLowerCase().includes("no tengo información") || 
+                respuesta.content.length < 10
             ) {
-                await ctxFn.flowDynamic("⚠️ Solo puedo responder preguntas sobre *normativas, buenas prácticas* y *principios del desarrollo de software*. Intenta reformular tu consulta dentro de esos temas.")
-            } else {
-                await ctxFn.flowDynamic(respuesta.content)
+                return await ctxFn.flowDynamic("🚫 Lo siento, tu pregunta parece no estar relacionada con el tema del desarrollo de software. Intenta reformularla con foco en *normativas, buenas prácticas o principios fundamentales.*");
             }
-        } catch (error) {
-            console.error("Error procesando la respuesta:", error)
-            await ctxFn.flowDynamic("Ocurrió un error al procesar tu consulta. Intenta más tarde.")
-        }
-    })
 
+            await ctxFn.flowDynamic(respuesta.content);
+        }
+    );
+
+// Función principal
 const main = async () => {
-    const adapterDB = new MockAdapter()
-    const adapterFlow = createFlow([flowPrincipal])
-    const adapterProvider = createProvider(BaileysProvider)
+    const adapterFlow = createFlow([flowConsultas]);
+    const adapterProvider = createProvider(BaileysProvider);
+    const adapterDB = new MockAdapter(); // Aunque no uses base de datos real, este mock es requerido por la librería
 
     createBot({
         flow: adapterFlow,
         provider: adapterProvider,
         database: adapterDB,
-    })
+    });
 
-    QRPortalWeb()
-}
+    QRPortalWeb();
+};
 
-main()
-
+main();
