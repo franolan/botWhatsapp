@@ -9,14 +9,13 @@ const path = require("path")
 const fs = require("fs")
 const chat = require("./chatGPT")
 
-// Leer archivos de texto
+
 const menuPath = path.join(__dirname, "mensajes", "menu.txt")
 const menu = fs.readFileSync(menuPath, "utf8")
 
 const pathConsultas = path.join(__dirname, "mensajes", "promptConsultas.txt")
 const promptConsultas = fs.readFileSync(pathConsultas, "utf8")
 
-// Flujos del bot
 const flowMenuRest = addKeyword(EVENTS.ACTION)
     .addAnswer('Este es el menu', {
         media: "https://www.ujamaaresort.org/wp-content/uploads/2018/01/Ujamaa-restaurant-menu.pdf"
@@ -35,7 +34,7 @@ const flowConsultas = addKeyword(EVENTS.ACTION)
     })
 
 const flowWelcome = addKeyword(EVENTS.WELCOME)
-    .addAnswer("Este es el flujo Welcome", {
+    .addAnswer("Bienvenido a AI for Developers", {
         delay: 100,
     }, async (ctx, ctxFn) => {
         if (ctx.body.includes("Casas")) {
