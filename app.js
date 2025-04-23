@@ -16,14 +16,6 @@ const menu = fs.readFileSync(menuPath, "utf8")
 const pathConsultas = path.join(__dirname, "mensajes", "promptConsultas.txt")
 const promptConsultas = fs.readFileSync(pathConsultas, "utf8")
 
-const flowMenuRest = addKeyword(EVENTS.ACTION)
-    .addAnswer('Este es el menu', {
-        media: "https://www.ujamaaresort.org/wp-content/uploads/2018/01/Ujamaa-restaurant-menu.pdf"
-    })
-
-const flowReservar = addKeyword(EVENTS.ACTION)
-    .addAnswer('Este es el flow reservas: https://hacetureserva.com')
-
 const flowConsultas = addKeyword(EVENTS.ACTION)
     .addAnswer('Este es el flow consultas')
     .addAnswer("Hace tu consulta", { capture: true }, async (ctx, ctxFn) => {
@@ -53,10 +45,6 @@ const menuFlow = addKeyword("Menu").addAnswer(
         }
         switch (ctx.body) {
             case "1":
-                return gotoFlow(flowMenuRest)
-            case "2":
-                return gotoFlow(flowReservar)
-            case "3":
                 return gotoFlow(flowConsultas)
             case "0":
                 return await flowDynamic("Saliendo... Puedes volver a acceder a este menú escribiendo '*Menu*'")

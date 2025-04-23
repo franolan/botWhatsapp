@@ -1,329 +1,390 @@
-Sos un asesor para un restaurant. Te encargas de responder preguntas frecuentes de los usuarios.
-Responde con mensajes cortos y precisos. Te voy a dar el menu que tenemos disponible.
-El plato del día es arroz con pollo.
+Pregunta: ¿Cómo creo una función en Python?
+Respuesta: Usa la palabra clave def. Ejemplo:
+def saludar():
+print("Hola Mundo")
+Pregunta: ¿Cómo declaro una variable en JavaScript?
+Respuesta: Puedes usar let, const o var. Ejemplo:
+let nombre = "Carlos";
+Pregunta: ¿Qué es una API y para qué sirve?
+Respuesta: Una API es una interfaz que permite la comunicación entre dos sistemas. Se usa para acceder a funcionalidades o datos de otro software.
+Pregunta: ¿Cómo hago una solicitud HTTP con fetch en JavaScript?
+Respuesta:
+fetch("https://api.example.com")
+.then(response => response.json())
+.then(data => console.log(data));
+Pregunta: ¿Qué es el método map() en JavaScript?
+Respuesta: Es un método que transforma los elementos de un arreglo sin modificar el original. Ejemplo:
+let numeros = [1, 2, 3];
+let dobles = numeros.map(n => n * 2);
+Pregunta: ¿Cómo manejo errores en Python?
+Respuesta: Usa try y except. Ejemplo:
+try:
+x = 10 / 0
+except ZeroDivisionError:
+print("Error: división por cero.")
+Pregunta: ¿Qué es una promesa en JavaScript?
+Respuesta: Una promesa es un objeto que representa una operación asincrónica. Puede estar pendiente, resuelta o rechazada.
+Pregunta: ¿Cómo conecto WhatsApp con OpenAI?
+Respuesta: Puedes usar Twilio o la API oficial de WhatsApp junto con la API de OpenAI para enviar y recibir mensajes programáticamente.
+Pregunta: ¿Qué es un bucle for en Python?
+Respuesta:
+for i in range(5):
+print(i)
+Pregunta: ¿Cómo creo una función asíncrona en JavaScript?
+Respuesta:
+async function obtenerDatos() {
+let respuesta = await fetch("https://api.com");
+let datos = await respuesta.json();
+console.log(datos);
+}
+Pregunta: ¿Cómo puedo comentar código en diferentes lenguajes?
+Respuesta:
+Python: # comentario
+JavaScript: // comentario
+HTML: <!-- comentario -->
+Pregunta: ¿Cómo uso la API de OpenAI para generar texto?
+Respuesta: Necesitas tu API Key. Luego haces una solicitud POST a https://api.openai.com/v1/chat/completions con un modelo como gpt-3.5-turbo o gpt-4. Incluye los mensajes en formato JSON.
+Pregunta: ¿Qué es una función en programación?
+Respuesta: Es un bloque de código reutilizable que realiza una tarea específica. Puedes llamarla cada vez que necesites esa funcionalidad.
+Pregunta: ¿Qué es una estructura condicional?
+Respuesta: Permite tomar decisiones. Ejemplo en Python:
+if x > 0:
+print("Positivo")
+else:
+print("Negativo")
+Pregunta: ¿Qué es una base de datos?
+Respuesta: Es un sistema para almacenar, organizar y acceder a datos de forma estructurada. Pueden ser relacionales (como MySQL) o no relacionales (como MongoDB).
+Pregunta: ¿Cómo se declara una lista en Python?
+Respuesta:
+mi_lista = [1, 2, 3, 4]
+Pregunta: ¿Qué es un objeto en programación?
+Respuesta: Es una instancia de una clase que agrupa datos (atributos) y comportamientos (métodos). Muy usado en programación orientada a objetos.
+Pregunta: ¿Qué es JSON?
+Respuesta: JSON (JavaScript Object Notation) es un formato ligero para intercambio de datos, muy usado para APIs. Es fácil de leer y escribir.
+Pregunta: ¿Qué es una variable y cómo se usa?
+Respuesta: Una variable es un espacio en memoria donde se almacena un valor. Se usa para guardar datos temporales y reutilizarlos en el código.
+Pregunta: ¿Cómo se define una clase en Python?
+Respuesta:
+class Persona:
+def init(self, nombre):
+self.nombre = nombre
+Pregunta: ¿Qué es Git y para qué sirve?
+Respuesta: Git es un sistema de control de versiones que permite llevar el historial de cambios en un proyecto y colaborar entre desarrolladores.
+Pregunta: ¿Qué es HTML?
+Respuesta: HTML (HyperText Markup Language) es el lenguaje estándar para crear páginas web. Define la estructura del contenido usando etiquetas.
+Pregunta: ¿Qué es CSS?
+Respuesta: CSS (Cascading Style Sheets) es un lenguaje que se usa para dar estilo a páginas web, como colores, fuentes, tamaños y posicionamiento.
+Pregunta: ¿Cómo se enlaza un archivo CSS en HTML?
+Respuesta: Con la etiqueta <link> en el <head>:
+<link rel="stylesheet" href="estilos.css"> 
+Pregunta: ¿Qué es JavaScript y para qué se usa?
+Respuesta: JavaScript es un lenguaje de programación que se ejecuta en el navegador y permite crear funcionalidades dinámicas e interactivas en las páginas web.
+Pregunta: ¿Qué es el DOM en JavaScript?
+Respuesta: El DOM (Document Object Model) es la representación del HTML como objetos en memoria, que JavaScript puede manipular para cambiar el contenido o estilo dinámicamente.
+Pregunta: ¿Cómo accedo a un elemento HTML con JavaScript?
+Respuesta: Usando métodos como document.getElementById("id") o document.querySelector(".clase").
+Pregunta: ¿Qué es una función flecha en JavaScript?
+Respuesta: Es una forma concisa de escribir funciones. Ejemplo:
+const sumar = (a, b) => a + b;
+Pregunta: ¿Qué es una API REST?
+Respuesta: Es un tipo de API que sigue principios como usar métodos HTTP (GET, POST, PUT, DELETE) y trabajar con recursos identificados por URLs.
+Pregunta: ¿Qué diferencia hay entre let, const y var en JavaScript?
+Respuesta:
+•	var: declaración tradicional, con alcance de función.
+•	let: declaración moderna, con alcance de bloque.
+•	const: como let, pero su valor no puede cambiar.
+Pregunta: ¿Qué es una promesa en JavaScript?
+Respuesta: Es un objeto que representa una operación que se completará en el futuro, con éxito o con error. Se usa en programación asincrónica.
+Pregunta: ¿Qué es el async/await?
+Respuesta: Es una forma moderna de trabajar con código asincrónico en JavaScript, que permite escribirlo de manera más clara, como si fuera síncrono.
+Pregunta: ¿Qué es una base de datos relacional?
+Respuesta: Es un tipo de base de datos donde los datos se almacenan en tablas con filas y columnas. Ejemplos: MySQL, PostgreSQL.
+Pregunta: ¿Qué es una base de datos no relacional?
+Respuesta: Es una base de datos que no usa tablas tradicionales. Ejemplo: MongoDB, que almacena datos en documentos JSON.
+Pregunta: ¿Qué es SQL?
+Respuesta: SQL (Structured Query Language) es un lenguaje utilizado para consultar y manipular datos en bases de datos relacionales.
+Pregunta: ¿Cómo hago una consulta SELECT en SQL?
+Respuesta:
+SELECT * FROM usuarios;
+Esto selecciona todos los campos de la tabla "usuarios".
+Pregunta: ¿Qué es una API Key?
+Respuesta: Es una clave única que se usa para autenticarte al consumir una API. Es como tu usuario y contraseña para acceder al servicio.
+Pregunta: ¿Qué es una request POST?
+Respuesta: Es una solicitud HTTP que se usa para enviar datos al servidor, por ejemplo, al enviar un formulario o crear un nuevo recurso.
+Pregunta: ¿Qué es JSON.stringify()?
+Respuesta: Es un método de JavaScript que convierte un objeto en una cadena JSON. Ideal para enviar datos a una API.
+Pregunta: ¿Qué es JSON.parse()?
+Respuesta: Convierte una cadena JSON en un objeto JavaScript. Se usa para trabajar con datos recibidos de una API.
+Pregunta: ¿Qué significa status 200 o 404 en una API?
+Respuesta: Son códigos HTTP.
+•	200: Éxito.
+•	404: Recurso no encontrado.
+•	500: Error del servidor.
+Pregunta: ¿Qué son las buenas prácticas de programación?
+Respuesta: Son recomendaciones que ayudan a escribir código más limpio, mantenible y eficiente. Incluyen nombrar bien variables, evitar repetir código, y documentar lo que haces.
+Pregunta: ¿Qué significa DRY en programación?
+Respuesta: DRY = Don't Repeat Yourself. Es una filosofía que sugiere evitar repetir código para facilitar el mantenimiento.
+Pregunta: ¿Por qué es importante nombrar bien variables y funciones?
+Respuesta: Porque mejora la legibilidad del código, facilita el trabajo en equipo y evita errores al entender qué hace cada parte del programa.
+Pregunta: ¿Qué es el control de versiones?
+Respuesta: Es el manejo del historial de cambios en tu código. Permite volver a versiones anteriores y colaborar con otros desarrolladores. Git es el sistema más usado.
+Pregunta: ¿Qué es Git?
+Respuesta: Es un sistema de control de versiones distribuido. Te permite guardar, comparar y restaurar versiones anteriores de tu proyecto.
+Pregunta: ¿Cómo creo un repositorio Git?
+Respuesta:
+1.	git init
+2.	git add .
+3.	git commit -m "Primer commit"
+Pregunta: ¿Qué hace el comando git clone?
+Respuesta: Clona un repositorio remoto en tu computadora. Ejemplo:
+git clone https://github.com/usuario/repositorio.git
+Pregunta: ¿Qué es un commit en Git?
+Respuesta: Es un punto de guardado en el historial del proyecto. Incluye los cambios que has realizado hasta ese momento.
+Pregunta: ¿Qué hace git push?
+Respuesta: Sube tus cambios locales al repositorio remoto (por ejemplo, en GitHub).
+Pregunta: ¿Cómo soluciono un error en mi código?
+Respuesta:
+1.	Lee el mensaje de error.
+2.	Revisa la línea afectada.
+3.	Imprime valores con print o console.log.
+4.	Usa un debugger si es necesario.
+Pregunta: ¿Qué es un debugger?
+Respuesta: Es una herramienta que permite ejecutar el código paso a paso, observar variables y encontrar errores de forma visual.
+Pregunta: ¿Qué es un error de sintaxis?
+Respuesta: Es un error que ocurre cuando el código no está escrito correctamente según las reglas del lenguaje. Ejemplo: olvidarse de un paréntesis o un punto y coma.
+Pregunta: ¿Qué es un error de lógica?
+Respuesta: Es cuando el código corre sin fallas, pero no hace lo que debería porque hay un problema en la lógica del programa.
+Pregunta: ¿Qué es un ataque XSS?
+Respuesta: XSS (Cross-Site Scripting) es un ataque donde se inserta código malicioso en una página web. Se previene validando y sanitizando entradas de usuario.
+Pregunta: ¿Qué es la inyección SQL y cómo se previene?
+Respuesta: Es un ataque que consiste en insertar código SQL malicioso a través de formularios. Se previene usando consultas preparadas o ORM.
+Pregunta: ¿Qué es el cifrado de contraseñas?
+Respuesta: Es una técnica para guardar contraseñas de forma segura, usando funciones como bcrypt en lugar de guardar la contraseña en texto plano.
+Pregunta: ¿Cómo automatizo tareas con Python?
+Respuesta: Puedes usar scripts que abran archivos, envíen correos, limpien datos o se conecten a APIs. Librerías útiles: os, smtplib, requests, pandas.
+Pregunta: ¿Qué es un script?
+Respuesta: Es un archivo de código que ejecuta una serie de instrucciones automáticamente, sin intervención del usuario.
+Pregunta: ¿Cómo envío un correo desde Python?
+Respuesta:
+Usa la librería smtplib. Ejemplo básico:
+import smtplib
+server = smtplib.SMTP('smtp.gmail.com', 587)
+server.starttls()
+server.login('tu_correo', 'tu_contraseña')
+server.sendmail('origen', 'destino', 'mensaje')
+Pregunta: ¿Cómo leo un archivo CSV con Python?
+Respuesta:
+import pandas as pd
+df = pd.read_csv('archivo.csv')
+print(df)
+Pregunta: ¿Cómo integro OpenAI con WhatsApp usando Twilio?
+Respuesta:
+1.	Crea una cuenta en Twilio y configura WhatsApp Sandbox.
+2.	Usa Flask o Node.js para recibir mensajes.
+3.	Envía el texto recibido a la API de OpenAI.
+4.	Devuelve la respuesta de OpenAI al usuario de WhatsApp.
+Pregunta: ¿Qué modelos puedo usar con OpenAI?
+Respuesta: Algunos modelos disponibles son:
+•	gpt-3.5-turbo
+•	gpt-4
+•	gpt-4-turbo (más rápido y barato)
+•	Codex (para generación de código)
+Pregunta: ¿Puedo generar código con la API de OpenAI?
+Respuesta: Sí. Puedes enviar instrucciones como “escríbeme una función en Python para ordenar una lista” y el modelo generará el código.
+Pregunta: ¿Cómo puedo entrenar mi chatbot con información personalizada?
+Respuesta: Puedes construir una base de conocimiento (como la que estás haciendo) y alimentar las respuestas a través del contexto o usando funciones como retrieval-augmented generation (RAG).
+Pregunta: ¿Qué es una condición en programación?
+Respuesta: Es una instrucción que permite ejecutar cierto código solo si se cumple una condición. Ejemplo en Python:
+if edad >= 18:
+print("Eres mayor de edad")
+Pregunta: ¿Qué es un bucle while y cómo funciona?
+Respuesta: Ejecuta un bloque de código mientras una condición sea verdadera. Ejemplo:
+while contador < 5:
+print(contador)
+contador += 1
+Pregunta: ¿Qué es una función recursiva?
+Respuesta: Es una función que se llama a sí misma. Se usa para resolver problemas que pueden dividirse en subproblemas. Ejemplo típico: factorial.
+Pregunta: ¿Qué es un array o lista?
+Respuesta: Es una estructura que almacena múltiples valores en una sola variable. En Python se llama lista, en JavaScript es un array.
+Pregunta: ¿Qué es un booleano?
+Respuesta: Es un tipo de dato que solo puede tener dos valores: True o False. Se usa en condiciones y lógica de control.
+Pregunta: ¿Cómo se genera un número aleatorio en Python?
+Respuesta:
+import random
+numero = random.randint(1, 10)
+Pregunta: ¿Qué es una librería o módulo?
+Respuesta: Es un conjunto de funciones ya escritas que puedes importar para evitar hacer todo desde cero. Ejemplo en Python: import math
+Pregunta: ¿Qué es una API pública y una privada?
+Respuesta:
+•	Pública: accesible por cualquiera sin autenticación (o con API Key simple).
+•	Privada: solo accesible dentro de un sistema o con permisos especiales.
+Pregunta: ¿Cómo conecto una base de datos a Python?
+Respuesta: Usando librerías como sqlite3 para SQLite o sqlalchemy para bases de datos más grandes como PostgreSQL o MySQL.
+Pregunta: ¿Qué hace el operador === en JavaScript?
+Respuesta: Compara si dos valores son iguales en valor y tipo. A diferencia de ==, que convierte tipos automáticamente.
+Pregunta: ¿Qué es un endpoint en una API?
+Respuesta: Es una URL específica a la que puedes hacer una solicitud para obtener o enviar datos. Ejemplo: /usuarios o /productos/23
+Pregunta: ¿Qué es una estructura de datos?
+Respuesta: Es una forma de organizar y almacenar datos para facilitar su acceso y modificación. Ejemplos: listas, pilas, colas, árboles.
+Pregunta: ¿Qué es el operador spread en JavaScript?
+Respuesta: Permite copiar o expandir elementos de un array u objeto. Ejemplo:
+let copia = [...original];
+Pregunta: ¿Cómo creo un servidor con Flask en Python?
+Respuesta:
+from flask import Flask
+app = Flask(name)
+@app.route("/")
+def inicio():
+return "Hola desde Flask"
+app.run()
+Pregunta: ¿Qué es un entorno virtual en Python y por qué es útil?
+Respuesta: Es un entorno aislado para instalar librerías sin afectar el sistema global. Se crea con python -m venv nombre_entorno.
+Pregunta: ¿Qué significa refactorizar código?
+Respuesta: Es mejorar el código existente sin cambiar su comportamiento. Sirve para hacerlo más claro, eficiente o mantenible.
+Pregunta: ¿Qué es un ORM?
+Respuesta: Es una técnica que permite interactuar con una base de datos usando objetos del lenguaje (como clases en Python). Ejemplo: SQLAlchemy, Django ORM.
+Pregunta: ¿Qué es una API RESTful?
+Respuesta: Es una API que sigue los principios REST, usando métodos HTTP y rutas claras. Ejemplo: GET /usuarios, POST /usuarios
+Pregunta: ¿Qué es un webhook?
+Respuesta: Es una URL a la que una aplicación puede enviar datos automáticamente cuando ocurre un evento. Se usa para integraciones en tiempo real.
+Pregunta: ¿Cómo funciona el flujo de datos en React?
+Respuesta: En React, los datos fluyen de los componentes padres hacia los hijos mediante props. Es unidireccional por defecto.
+Pregunta: ¿Qué es TypeScript?
+Respuesta: Es un superset de JavaScript que agrega tipado estático. Ayuda a detectar errores en tiempo de desarrollo.
+Pregunta: ¿Qué es una función lambda en Python?
+Respuesta: Es una función anónima y corta. Ejemplo:
+suma = lambda x, y: x + y
+Pregunta: ¿Qué es una promesa encadenada en JavaScript?
+Respuesta: Es cuando usas múltiples .then() para procesar una secuencia de pasos asincrónicos.
+fetch(url)
+.then(res => res.json())
+.then(data => console.log(data));
+Pregunta: ¿Cómo valido una dirección de correo con una expresión regular en Python?
+Respuesta:
+import re
+regex = r"[^@]+@[^@]+.[^@]+"
+if re.match(regex, "ejemplo@correo.com"):
+print("Válido")
+Pregunta: ¿Qué es el modelo de cajas en CSS?
+Respuesta: Es la forma en que el navegador representa los elementos: cada uno es una "caja" con contenido, padding, borde y margen.
+Pregunta: ¿Qué es un hook en React?
+Respuesta: Es una función especial que permite usar estado y otras características de React en componentes funcionales. Ejemplo: useState, useEffect.
+Pregunta: ¿Qué es un test unitario?
+Respuesta: Es una prueba automática que verifica que una función o módulo específico funcione correctamente de manera aislada.
+Pregunta: ¿Qué necesito para conectarme a una API?
+Respuesta: Generalmente necesitas:
+1.	La URL del endpoint
+2.	Un método HTTP (GET, POST, etc.)
+3.	Una API Key o token (si es privada)
+4.	Opcional: parámetros o un cuerpo JSON con datos
+Pregunta: ¿Cómo hago una solicitud a una API con Python?
+Respuesta:
+import requests
+respuesta = requests.get("https://api.ejemplo.com/datos")
+print(respuesta.json())
+Pregunta: ¿Cómo envío datos con una API POST en Python?
+Respuesta:
+import requests
+data = {"nombre": "Juan", "edad": 25}
+respuesta = requests.post("https://api.ejemplo.com/usuarios", json=data)
+print(respuesta.status_code)
+Pregunta: ¿Cómo hago una solicitud a una API con fetch en JavaScript?
+Respuesta:
+fetch("https://api.ejemplo.com")
+.then(res => res.json())
+.then(data => console.log(data))
+Pregunta: ¿Cómo envío datos con fetch en una solicitud POST?
+Respuesta:
+fetch("https://api.ejemplo.com/usuarios", {
+method: "POST",
+headers: { "Content-Type": "application/json" },
+body: JSON.stringify({ nombre: "Ana", edad: 30 })
+})
+.then(res => res.json())
+.then(data => console.log(data))
+Pregunta: ¿Qué es una API Key y cómo la uso?
+Respuesta: Es una clave de acceso que identifica al usuario de una API. Normalmente se incluye en los headers de la solicitud:
+headers = { "Authorization": "Bearer TU_API_KEY" }
+Pregunta: ¿Cómo conecto Python a una base de datos SQLite?
+Respuesta:
+import sqlite3
+conn = sqlite3.connect("mi_base.db")
+cursor = conn.cursor()
+cursor.execute("SELECT * FROM usuarios")
+for fila in cursor.fetchall():
+print(fila)
+Pregunta: ¿Cómo conecto Python a una base de datos MySQL?
+Respuesta:
+import mysql.connector
+conn = mysql.connector.connect(user="root", password="1234", host="localhost", database="mi_base")
+cursor = conn.cursor()
+cursor.execute("SELECT * FROM productos")
+for fila in cursor.fetchall():
+print(fila)
+Pregunta: ¿Cómo conecto Python a MongoDB?
+Respuesta:
+from pymongo import MongoClient
+cliente = MongoClient("mongodb://localhost:27017")
+db = cliente["mi_base"]
+coleccion = db["usuarios"]
+for usuario in coleccion.find():
+print(usuario)
+Pregunta: ¿Cómo conecto Node.js a una base de datos MySQL?
+Respuesta:
+const mysql = require('mysql');
+const conexion = mysql.createConnection({
+host: 'localhost',
+user: 'root',
+password: '1234',
+database: 'mi_base'
+});
+conexion.connect();
+conexion.query('SELECT * FROM usuarios', (err, resultados) => {
+if (err) throw err;
+console.log(resultados);
+});
+Pregunta: ¿Cómo conecto Node.js a MongoDB?
+Respuesta:
+const { MongoClient } = require('mongodb');
+const uri = "mongodb://localhost:27017";
+MongoClient.connect(uri, (err, cliente) => {
+const db = cliente.db("mi_base");
+db.collection("usuarios").find().toArray((err, datos) => {
+console.log(datos);
+});
+});
+Pregunta: ¿Qué librería uso para conectar Python con PostgreSQL?
+Respuesta: Puedes usar psycopg2. Ejemplo:
+import psycopg2
+conn = psycopg2.connect(database="mi_base", user="postgres", password="1234", host="localhost", port="5432")
+cursor = conn.cursor()
+cursor.execute("SELECT * FROM clientes")
+print(cursor.fetchall())
+Pregunta: ¿Qué diferencia hay entre conexión síncrona y asíncrona?
+Respuesta:
+•	Síncrona: el programa espera la respuesta antes de seguir.
+•	Asíncrona: permite seguir ejecutando otras cosas mientras llega la respuesta. Ideal para APIs o bases de datos lentas.
+Pregunta: ¿Qué es una conexión persistente a base de datos?
+Respuesta: Es una conexión que se mantiene abierta y reutiliza en lugar de abrir/cerrar cada vez. Mejora el rendimiento en apps con muchas consultas.
+Pregunta: ¿Qué es un pool de conexiones?
+Respuesta: Es un conjunto de conexiones abiertas a la base de datos que se pueden reutilizar, útil en aplicaciones con muchos usuarios simultáneos.
+Pregunta: ¿Qué errores comunes pueden ocurrir al conectar con una base de datos?
+Respuesta:
+•	Error de autenticación (usuario o contraseña mal)
+•	Error de red o conexión
+•	La base no existe o el puerto es incorrecto
+•	No cerrar conexiones (fugas de recursos)
+Pregunta: ¿Cómo protejo mi API Key en un proyecto?
+Respuesta: No la pongas directamente en el código. Usa variables de entorno y archivos .env. Ejemplo con Python:
+import os
+api_key = os.getenv("OPENAI_API_KEY")
+Pregunta: ¿Qué es un archivo .env?
+Respuesta: Es un archivo donde puedes guardar configuraciones sensibles como claves y contraseñas. No debe subirse a Git.
+Pregunta: ¿Cómo manejo errores al hacer solicitudes a APIs?
+Respuesta:
+•	Verifica el código de estado (status code)
+•	Usa bloques try/except en Python
+•	Usa .catch() en JavaScript
+Pregunta: ¿Qué es CORS y por qué puede bloquear una API?
+Respuesta: Es una política de seguridad del navegador que bloquea peticiones entre dominios distintos si no están autorizadas por el servidor.
 
-GUACAMOLE (Avocado, Lime, Olive Oil, Tomato, Green pepper, Onion)
-BRUSCHETTA TOMATO AND MOZZARELLA
-BRUSCHETTA TOMATO, GARLIC AND OLIVES
-MIXED BRUSCHETTA
-GARLIC BREAD (Bread slices with garlic butter)
-MINI PIZZAS ( Tomato and mozzarella cheese)
-VEGETABLE SAMOSA
-BEEF SAMOSA
-KACHORI (Typical zanzibar potatoball with lime)
-KATLESI (Typical zanzibar potatoball with beef)
-SHRIMPS CANAPE’ (Lettuce, shrimps, mayonnaise)
-EGGS CANAPE’ (Eggs, mayonnaise, mustard)
-VEGETABLES-TUNA CANAPE’ (Mix fresh vegetables, mayonnaise, tuna)
-TOMATO CANAPE’ (Baked tomato with mozzarella and garlic)
-MIXED CANAPE’
-7 $
-6 $
-6 $
-8 $
-5 $
-6 $
-6 $
-6 $
-6 $
-6 $
-8 $
-6 $
-10 $
-6 $
-8 $
-APPETIZER
-HOTDOG
-CHICKEN SANDWICH
-VEGETABLE SANDWICH
-FRESH TUNA SANDWICH
-TOMATO AND MOZZARELLA CHEESE SANDWICH
-7 $
-9 $
-8 $
-10 $
-8 $
-CHEESE BURGER
-BEEF BURGER
-CHICKEN BURGER
-VEGETABLE BURGER
-FISH BURGER
-* All served with french fries and fresh salad
-9 $
-9 $
-9 $
-8 $
-10 $
-SANDWICHES
-BURGER SANDWICHES
-RUSSIAN SALAD (Boiled carrots, boiled potatoes, peas and mayonnaise)
-SHAMBA SALAD (Fresh mixed vegetables)
-SEAFOOD SALAD (Fresh fish on shamba salad in vinaigrette dressing)
-AVOCADO SALAD (Fresh garden salad with avocado and raisin in vinegar dressing)
-CHICKEN S ALAD (Chicken fillet on fresh salad with mayonnaise)
-TUNA CARPACCIO SALAD (Fresh raw tuna marinated in lime juice)
-GREEK SALAD (Cucumber, tomato and black olives with feta cheese)
-CAPRESE SALAD (Fresh tomato slices, basil leaves and mozzarella)
-COKTAIL CALAMARI SALAD
-OCTOPUS POTATOES SALAD (Boiled potatoes cubes with octopus)
-8 $
-7 $
-12 $
-8 $
-9 $
-10 $
-7 $
-8 $
-10 $
-10 $
-EGGPLANT LASAGNA (eggplant, tomato, mozzarella and parmesan)
-GRATIN VEGETABLES (mixed roasted vegetables with bread crumb)
-FRIED VEGETABLE TEMPURA
-VEGETABLE CURRY
-PLAIN CHIPS (French Fries)
-10$
-8 $
-10 $
-9 $
-5 $
-VEGETARIAN DISHES
-SALADS
-GRILLED FISH OF THE DAY
-FISH FINGER (Breaded fish sticks)
-COCONUT CRUSTED CALAMARI RINGS
-SEAFOOD CURRY
-CHICKEN PILIPILI
-FRITTO MISTO (Mixed seafood tempura)
-BEEF OR CHICKEN COTOLETTA (Fried breaded steak)
-AMERICAN PEPPER BEEF STEAK
-BEEF SKEWERS
-CHICKEN SKEWERS
-SEAFOOD SKEWERS
-GRILLED JUMBO PRAWNS
-OCTOPUS CURRY
-CHICKEN CURRY
-GRILLED LOBSTER
-GRILLED CIGALS
-"MIXED SEAFOOD PLATTER (For two pax)
-*All served with rice and vegetable sauteè and sauce or french fries and mixed salad"
-12 $
-12 $
-10 $
-12 $
-10 $
-18 $
-10 $
-12 $
-9 $
-9 $
-12 $
-18 $
-12 $
-10 $
-25 $
-18 $
-40 $
-MAIN DISHES
-PLAIN PASTA (Olive Oil and Parmesan cheese)
-PASTA AL POMODORO (Tomato sauce)
-TUNA SPAGHETTI
-VEGETABLE PASTA (Mixed vegetable sauce)
-PASTA BOLOGNESE (Minced beef Sauce)
-SEAFOOD LINGUINE
-PASTA PRAWNS AND ZUCCHINI
-PASTA AL PESTO (Basil, cashewnut and Parmesan sauce)
-BEEF LASAGNA (Homemade lasagne)
-TUNA RAVIOLI (Homemade filled pasta)
-GNOCCHI AL POMODORO (Homemade Potatoes gnocchi in tomato sauce)
-STROZZAPRETI ALLE MELANZANE (Homemade special pasta in aubergine sauce)"
-6 $
-8 $
-10 $
-8 $
-9$
-14 $
-12 $
-9 $
-12 $
-12 $
-10 $
-10 $
-PASTA
-PUMPKIN SOUP
-POTATOES AND LEAKS SOUP
-ZUCCHINI CREAM SOUP
-VEGETABLE CREAM SOUP
-COCONUT BROCCOLI SOUP
-CHICKPEAS SOUP
-8 $
-8 $
-8 $
-8 $
-8 $
-8 $
-CASSAVA IN COCONUT SAUCE served with STEAMED FISH"
-FISH BANANA IN COCONUT SAUCE
-UGALI (Zanzibar polenta) served with FRIED FISH AND SPINACH SAUCE
-"BEEF PILAU RICE (Spiced) served with KACHUMBALI SALAD
-BIRIANI RICE with BEEF or FISH
-CHAPATI served with FISH CURRY
-COCONUT RICE served with COCONUT FISH SAUCE
-10 $
-10 $
-10 $
-12 $
-13 $
-12 $
-12 $
-ZANZIBAR DISHES
-SOUPS
-FOCACCIA (Plain pizza with olive oil and rosemary)
-MARINARA (Tomato, garlic and olive oil)
-MARGHERITA (Tomato and mozzarella)
-HAWAII (Tomato, mozzarella, pineapple and chicken)
-TRE FORMAGGI (Tomato, mozzarella, cheddar, parmisan)
-QUATTRO STAGIONI (Tomato, mozzarella, sausage, green pepper)
-VEGETABLE PIZZA (Tomato, mozzarella, mixed fresh vegetable)
-NAPOLI (Tomato, mozzarella, anchoives, cappers)
-SEAFOOD PIZZA (Tomato, mozzarella, mixed seafood)
-UJAMAA (Tomato, mozzarella, onion and tuna)
-7 $
-7 $
-8 $
-10 $
-12 $
-10 $
-10 $
-10 $
-14 $
-10 $
-PIZZA
-VEGETABLE SUSHI
-TUNA SUSHI
-SEAFOOD SUSHI (Octopus, Calamari, Prawns)
-MANGO SUSHI
-EGG SUSHI
-PILAF RICE (Sauted rice with Curcuma and vegetable)
-CANTONESE RICE (Sauted rice with eggs and tuna)
-PLAIN RICE with sauce
-RICE
-SUSHI
-CHICKEN ROLL CHAPATI
-VEGETABLE ROLL CHAPATI
-FISH ROLL CHAPATI
-ROLL CHAPATI
-ICE CREAM (chocolate, mango, passionfruits, vanilla)
-FRUIT SALAD
-FRUIT SALAD WITH ICE CREAM (one ball)
-CAKE OF THE DAY (ask waiter)
-10 $
-12 $
-14 $
-10 $
-12 $
-9 $
-10 $
-5 $
-10 $
-10 $
-12 $
-4 $
-5 $
-7 $
-7 $
-DESSERT
-LADY GAGA MARACUYA (Passion fruit, orange juice, vodka)
-LADY GAGA BANANA (Banana fruit, pineapple juice, vodka)
-LADY GAGA PINEAPPLE (Pineapple frui and juice, banana fruit, vodka)
-KARIBU ZANZIBAR (Campari, triple sec, lime, orange juice, ice)
-PINACOLADA (Malibu, White Bacardi, pineapple juice,coconut milk, ice)
-UJAMAA TONIC (Gin, konyagi, lime, tonic soda, ice)
-CUBALIBRE (Jamaica Rum, Cocacola, lime, ice)
-POLE POLE (Malibu, Vanilla vodka, pineapple juice, ice)
-MOJITO (Fresh mint leaf, White bacardi, lime, sugar, crushed ice)
-HAKUNA MATATA (Amarula, Afrikoko, Banana, Coconut milk, ice)
-SEX ON THE BAR (Baileys, dark bacardi, Banana, coconut milk, ice)
-LALA SALAMA (Brandy, vodka, pineapple juice, orange juice, ice)
-BLUE LAGOON (Blue curassao, vodka, lime, ice)
-TEQUILA SUNRISE (Tequila, grenadine, orange juice, ice)
-"MANGO COLADA (Amarula,coffee liqueur, mango juice,coconut milk ice)
-PROMISE AFRICA (Vodka, water melon juice, ice)
-BROWN SKIN (Konyagi, honey, lime, passion juice, ice)
-CAIPIRINHA (Cachaca, lime, sugar, crushed ice)
-ORANGE BLOSSOM (Gin, honey, orange juice, ice)
-MARGARITA (Tequila, triple sec, lime, ice)
-DAIQUIRI FROZEN (rum, ginger, crushed ice and your choice of fruit)
-SPRITZ (Prosecco, sparklin water, orange, ice, aperol)
-SUPER GIN (Gin, vodka, fresh ginger, lime, crushed ice)
-DAWA (Konyagi, honey, lime, crushed ice)
-GIN TONIC SINGLE
-GIN TONIC DOUBLE
-8 $
-8 $
-8 $
-8 $
-8 $
-8 $
-8 $
-8 $
-8 $
-8 $
-8 $
-8 $
-8 $
-8 $
-8 $
-8 $
-8 $
-8 $
-8 $
-8 $
-8 $
-8 $
-8 $
-8 $
-5 $
-8 $
-COCKTAILS
-To ensure the quality and goodness of our recipes we have chosen to use
-only fresh and seasonal products.
-With the true rhythm of life our cooks transform these gifts of nature, with respect and delicacy,
-giving shape and flavor to delicious dishes.
-Following this philosophy we can spend a few more minutes preparing the dishes but
-you could take advantage of being together and sharing the emotions of your vacation.
-Our food is made with love.
-MINERAL WATER 1,5 LT
-MINERAL WATER 0,5 LT
-SODA (Coca cola, Fanta, Sprite, coca light, soda water, tonic water, bitter lemon, Stoney tangawizi)
-REDBULL
-FRESH FRUIT JUICE (Ask for fruits of the day)
-FRESH COCONUT JUICE
-SMOOTHIES (Ask for flavour of the day)
-CHOCOLATE MILKSHAKES
-FRUITS MILKSHAKES (Ask for fruits of the day)
-BEERS (Safari, Kilimanjaro, Tusker, Ndovu, Castle, Heineken, Serengeti)
-SAVANNA
-1,5 $
-1 $
-2 $
-3 $
-3 $
-3 $
-4 $
-4 $
-4 $
-3 $
-4 $
-DRINKS
-ESPRESSO
-MACCHIATO (Espresso with milk foam)
-CAPUCCINO
-AMERICANO (Long Coffee)
-ICE COFFEE (Shaken Espresso with Ice)
-UJAMAA COFFEE (Espresso with milk foam and whisky cream)
-2 $
-2,5 $
-3,5 $
-2,5 $
- 4 $
-5 $
