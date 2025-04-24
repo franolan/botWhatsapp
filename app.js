@@ -13,13 +13,6 @@ const chat = require("./chatGPT");
 const pathConsultas = path.join(__dirname, "mensajes", "promptConsultas.txt");
 const promptConsultas = fs.readFileSync(pathConsultas, "utf8");
 
-// Función para filtrar consultas no relacionadas con el tema del chatbot
-const validarConsultaRelevante = (respuesta) => {
-    // Si la respuesta contiene palabras clave relacionadas con el desarrollo de software
-    const palabrasClave = ["normativas", "prácticas", "principios", "desarrollo", "software"];
-    return palabrasClave.some(palabra => respuesta.toLowerCase().includes(palabra)) || respuesta.length > 50;
-};
-
 // Flow para despedida cuando el usuario escribe "salir"
 const flowDespedida = addKeyword("salir")
     .addAnswer("👋 Gracias por usar el chatbot de AI for Developers. ¡Hasta luego y buen código!");
@@ -30,12 +23,8 @@ const flowPreguntas = addKeyword(EVENTS.ACTION)
         const consulta = ctx.body;
         const respuesta = await chat(promptConsultas, consulta);
 
-        if (
-            !respuesta ||
-            !respuesta.content ||
-            !validarConsultaRelevante(respuesta.content) // Validar si la respuesta es relevante
-        ) {
-            return await ctxFn.flowDynamic("🚫 Lo siento, tu pregunta no parece estar relacionada con el tema del desarrollo de software.");
+        if (!respuesta || !respuesta.content) {
+            return await ctxFn.flowDynamic("❌ Lo siento, ocurrió un error al procesar tu pregunta.");
         }
 
         await ctxFn.flowDynamic(respuesta.content);
@@ -49,12 +38,8 @@ const flowBienvenida = addKeyword(EVENTS.WELCOME)
         const consulta = ctx.body;
         const respuesta = await chat(promptConsultas, consulta);
 
-        if (
-            !respuesta ||
-            !respuesta.content ||
-            !validarConsultaRelevante(respuesta.content) // Validar si la respuesta es relevante
-        ) {
-            return await ctxFn.flowDynamic("🚫 Lo siento, tu pregunta no parece estar relacionada con el tema del desarrollo de software.");
+        if (!respuesta || !respuesta.content) {
+            return await ctxFn.flowDynamic("❌ Lo siento, ocurrió un error al procesar tu pregunta.");
         }
 
         await ctxFn.flowDynamic(respuesta.content);
@@ -64,7 +49,7 @@ const flowBienvenida = addKeyword(EVENTS.WELCOME)
 const main = async () => {
     const adapterFlow = createFlow([flowBienvenida, flowPreguntas, flowDespedida]);
     const adapterProvider = createProvider(BaileysProvider);
-    const adapterDB = new MockAdapter(); // Aunque no uses DB real, es obligatorio
+    const adapterDB = new MockAdapter();
 
     createBot({
         flow: adapterFlow,
