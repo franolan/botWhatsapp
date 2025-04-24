@@ -39,23 +39,21 @@ const flowPreguntas = addKeyword(EVENTS.ACTION, { sensitive: true })
 
 // Primer mensaje de bienvenida
 const flowBienvenida = addKeyword(EVENTS.WELCOME)
-    .addAnswer("¡Buen día! 🤖 Este es un chatbot sobre *normativas, buenas prácticas y principios fundamentales del desarrollo de software.*")
-    .addAnswer("¿Tienes alguna pregunta al respecto?", { capture: true }, async (ctx, ctxFn) => {
-        const consulta = ctx.body?.trim();
+    .addAnswer("¡Buen día! 🤖 Este es un chatbot sobre *normativas, buenas prácticas y principios fundamentales del desarrollo de software.*", null, async (ctx, ctxFn) => {
+        const user = ctx.from;
 
-        if (!consulta) {
-            return await ctxFn.flowDynamic("📭 Por favor, escribe tu consulta.");
+        if (ctx.hasOwnProperty("saludado") && ctx.saludado) {
+            return; // Evita volver a saludar
         }
 
-        const respuesta = await chat(promptConsultas, consulta);
+        ctx.saludado = true; // Marcar como saludado
 
-        if (!respuesta || !respuesta.content) {
-            return await ctxFn.flowDynamic("❌ Lo siento, ocurrió un error al procesar tu pregunta.");
-        }
-
-        await ctxFn.flowDynamic(respuesta.content);
-        return await ctxFn.gotoFlow(flowPreguntas);
+        await ctxFn.flowDynamic("¿Tienes alguna pregunta al respecto?");
+    })
+    .addAction(async (ctx, ctxFn) => {
+        return ctxFn.gotoFlow(flowPreguntas);
     });
+
 
 
 const main = async () => {
