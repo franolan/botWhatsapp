@@ -9,8 +9,7 @@ const chat = async (promptBase, userInput) => {
 
         const openai = new OpenAIApi(configuration);
 
-        const fullPrompt = `
-${promptBase}
+        const fullPrompt = `${promptBase}
 
 ---
 Pregunta del usuario: "${userInput}"
@@ -19,6 +18,7 @@ IMPORTANTE: Si esta pregunta no está relacionada con el desarrollo de software,
 
 🚫 Lo siento, esa pregunta no está relacionada con el desarrollo de software.
 `;
+
 
         const completion = await openai.createChatCompletion({
             model: "gpt-3.5-turbo",

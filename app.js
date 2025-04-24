@@ -18,9 +18,14 @@ const flowDespedida = addKeyword("salir")
     .addAnswer("👋 Gracias por usar el chatbot de AI for Developers. ¡Hasta luego y buen código!");
 
 // Flow para manejar preguntas después de la primera
-const flowPreguntas = addKeyword(EVENTS.ACTION)
+const flowPreguntas = addKeyword(EVENTS.ACTION, { sensitive: true })
     .addAnswer("Procesando tu consulta...", null, async (ctx, ctxFn) => {
-        const consulta = ctx.body;
+        const consulta = ctx.body?.trim();
+
+        if (!consulta) {
+            return await ctxFn.flowDynamic("📭 Por favor, escribe tu consulta.");
+        }
+
         const respuesta = await chat(promptConsultas, consulta);
 
         if (!respuesta || !respuesta.content) {
@@ -28,14 +33,20 @@ const flowPreguntas = addKeyword(EVENTS.ACTION)
         }
 
         await ctxFn.flowDynamic(respuesta.content);
-        await ctxFn.flowDynamic("¿Tienes alguna otra pregunta sobre normativas, buenas prácticas o principios del desarrollo de software?\nEscribe *salir* si ya no tienes más preguntas.");
+        return await ctxFn.flowDynamic("¿Tienes otra pregunta sobre desarrollo de software? Escribe *salir* si deseas terminar.");
     });
+
 
 // Primer mensaje de bienvenida
 const flowBienvenida = addKeyword(EVENTS.WELCOME)
     .addAnswer("¡Buen día! 🤖 Este es un chatbot sobre *normativas, buenas prácticas y principios fundamentales del desarrollo de software.*")
     .addAnswer("¿Tienes alguna pregunta al respecto?", { capture: true }, async (ctx, ctxFn) => {
-        const consulta = ctx.body;
+        const consulta = ctx.body?.trim();
+
+        if (!consulta) {
+            return await ctxFn.flowDynamic("📭 Por favor, escribe tu consulta.");
+        }
+
         const respuesta = await chat(promptConsultas, consulta);
 
         if (!respuesta || !respuesta.content) {
@@ -43,8 +54,9 @@ const flowBienvenida = addKeyword(EVENTS.WELCOME)
         }
 
         await ctxFn.flowDynamic(respuesta.content);
-        await ctxFn.flowDynamic("¿Tienes alguna otra pregunta sobre normativas, buenas prácticas o principios del desarrollo de software?\nEscribe *salir* si ya no tienes más preguntas.");
+        return await ctxFn.gotoFlow(flowPreguntas);
     });
+
 
 const main = async () => {
     const adapterFlow = createFlow([flowBienvenida, flowPreguntas, flowDespedida]);
